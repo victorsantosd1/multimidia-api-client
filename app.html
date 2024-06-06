@@ -1,0 +1,30 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+  {{ times[0].team.name }}
+</div>
+
+<script type="module">
+  const { createApp } = Vue
+
+  const API_URL = `https://api-football-standings.azharimm.dev/leagues/bra.1/standings?season=2024&sort=asc`
+
+  createApp({
+    data: () => ({
+      times: []
+    }),
+    methods: {
+      async getTimes () {
+        const response = await fetch(API_URL)
+        const data = await response.json()
+        
+        //console.log(data.data.standings)
+
+        this.times = data.data.standings
+      }
+    },
+    created() {
+      this.getTimes ()
+    }
+  }).mount('#app')
+</script>

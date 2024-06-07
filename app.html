@@ -1,7 +1,17 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
 <div id="app">
-  {{ times[0].team.name }}
+  {{ nome }} 
+  <div v-for="time in times">
+    <ul>
+      <li>Time: {{time.team.name}}</li>
+      <li>Pontos: {{ time.stats[3].value}}</li>
+      <li>Vitorias: {{ time.stats[7].value}}</li>
+      <li>Posição: {{ time.stats[10].value}}°</li>
+      
+
+    </ul>
+  </div>
 </div>
 
 <script type="module">
@@ -11,6 +21,7 @@
 
   createApp({
     data: () => ({
+      nome: '',
       times: []
     }),
     methods: {
@@ -20,6 +31,7 @@
         
         //console.log(data.data.standings)
 
+        this.nome = data.data.name
         this.times = data.data.standings
       }
     },

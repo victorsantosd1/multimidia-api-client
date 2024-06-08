@@ -1,15 +1,36 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<link rel="stylesheet" href="./assets/style.css">
 
 <div id="app">
-  {{ nome }} 
-  <div v-for="time in times">
-    <ul>
-      <li>Time: {{time.team.name}}</li>
-      <li>Pontos: {{ time.stats[3].value}}</li>
-      <li>Vitorias: {{ time.stats[7].value}}</li>
-      <li>Posição: {{ time.stats[10].value}}°</li>
-      
+  <h1 class="title">{{ nome }} </h1>
 
+  <ul class="row">
+    <li class="col-m header">Clube:</li>
+    <li class="col-l header">Pontos:</li>
+    <li class="col-l header">Partidas:</li>
+    <li class="col-l header">Vitorias:</li>
+    <li class="col-l header">Empates:</li>
+    <li class="col-l header">Derrotas:</li>
+    <li class="col-l header">GM:</li>
+    <li class="col-l header">GS:</li>
+    <li class="col-l header">SG:</li>
+  </ul>
+
+  
+
+  <div v-for="time in times">
+    <ul class="row">
+      <li class="col-m">{{ time.stats[10].value}}° <img :src="time.team.logos[0].href" height="16px"> {{time.team.name}}</li>
+      <li class="col-l">{{ time.stats[3].value}}</li>
+      <li class="col-l">{{ time.stats[0].value}}</li>
+      <li class="col-l">{{ time.stats[7].value}}</li>
+      <li class="col-l">{{ time.stats[6].value}}</li>
+      <li class="col-l">{{ time.stats[1].value}}</li>
+      <li class="col-l">{{ time.stats[5].value}}</li>
+      <li class="col-l">{{ time.stats[4].value}}</li>
+      <li class="col-l">{{ time.stats[2].value}}</li>
+      
+      
     </ul>
   </div>
 </div>

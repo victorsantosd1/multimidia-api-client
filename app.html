@@ -5,38 +5,49 @@
   <h1 class="title">{{ nome }} </h1>
 
   <ul class="row">
-    <li class="col-m header">Clube:</li>
-    <li class="col-l header">Pontos:</li>
-    <li class="col-l header">Partidas:</li>
-    <li class="col-l header">Vitorias:</li>
-    <li class="col-l header">Empates:</li>
-    <li class="col-l header">Derrotas:</li>
+    <li class="col-m header" style="text-align: start;">Clube:</li>
+    <li class="col-l header">Pts:</li>
+    <li class="col-l header">PJ:</li>
+    <li class="col-l header">VIT:</li>
+    <li class="col-l header">E:</li>
+    <li class="col-l header">DER:</li>
     <li class="col-l header">GM:</li>
     <li class="col-l header">GS:</li>
     <li class="col-l header">SG:</li>
   </ul>
 
-  
-
   <div v-for="time in times">
-    <ul class="row">
-      <li class="col-m">{{ time.stats[10].value}}° <img :src="time.team.logos[0].href" height="16px"> {{time.team.name}}</li>
-      <li class="col-l">{{ time.stats[3].value}}</li>
-      <li class="col-l">{{ time.stats[0].value}}</li>
-      <li class="col-l">{{ time.stats[7].value}}</li>
-      <li class="col-l">{{ time.stats[6].value}}</li>
-      <li class="col-l">{{ time.stats[1].value}}</li>
-      <li class="col-l">{{ time.stats[5].value}}</li>
-      <li class="col-l">{{ time.stats[4].value}}</li>
-      <li class="col-l">{{ time.stats[2].value}}</li>
-      
-      
-    </ul>
+    <row :time="time"></row>
   </div>
 </div>
 
+<div class="geral" style="background-color: #f8f9fa;">
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#4285F4;"></div>
+    <div class="text">Fase de grupos da Copa Libertadores</div>
+  </div>
+
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#FA7B17;"></div>
+    <div class="text">Qualificatórias da Copa Libertadores</div>
+  </div>
+
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#34A853;"></div>
+    <div class="text">Fase de Grupos da Copa Sul-Americana</div>
+  </div>
+
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#EA4335;"></div>
+    <div class="text">Rebaixamento</div>
+  </div>
+</div>
+
+
 <script type="module">
   const { createApp } = Vue
+
+  import Row from './components/row.js'
 
   const API_URL = `https://api-football-standings.azharimm.dev/leagues/bra.1/standings?season=2024&sort=asc`
 
@@ -46,18 +57,23 @@
       times: []
     }),
     methods: {
-      async getTimes () {
+      async getTimes() {
         const response = await fetch(API_URL)
         const data = await response.json()
-        
+
         //console.log(data.data.standings)
 
         this.nome = data.data.name
         this.times = data.data.standings
-      }
+
+      },
+      
     },
     created() {
-      this.getTimes ()
-    }
+      this.getTimes()
+    },
+    components:{
+      Row
+    },
   }).mount('#app')
 </script>

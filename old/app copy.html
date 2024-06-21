@@ -1,0 +1,79 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<link rel="stylesheet" href="./assets/style.css">
+
+<div id="app">
+  <h1 class="title">{{ nome }} </h1>
+
+  <ul class="row">
+    <li class="col-m header" style="text-align: start;">Clube:</li>
+    <li class="col-l header">Pts:</li>
+    <li class="col-l header">PJ:</li>
+    <li class="col-l header">VIT:</li>
+    <li class="col-l header">E:</li>
+    <li class="col-l header">DER:</li>
+    <li class="col-l header">GM:</li>
+    <li class="col-l header">GS:</li>
+    <li class="col-l header">SG:</li>
+  </ul>
+
+  <div v-for="time in times">
+    <row :time="time"></row>
+  </div>
+</div>
+
+<div class="geral" style="background-color: #f8f9fa;">
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#4285F4;"></div>
+    <div class="text">Fase de grupos da Copa Libertadores</div>
+  </div>
+
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#FA7B17;"></div>
+    <div class="text">Qualificatórias da Copa Libertadores</div>
+  </div>
+
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#34A853;"></div>
+    <div class="text">Fase de Grupos da Copa Sul-Americana</div>
+  </div>
+
+  <div class="cor">
+    <div class="Quadrado" style="background-color:#EA4335;"></div>
+    <div class="text">Rebaixamento</div>
+  </div>
+</div>
+
+
+<script type="module">
+  const { createApp } = Vue
+
+  import Row from './components/row.js'
+
+  const API_URL = `https://localhost:3333/times`
+
+  createApp({
+    data: () => ({
+      nome: '',
+      times: []
+    }),
+    methods: {
+      async getTimes() {
+        const response = await fetch(API_URL)
+        const data = await response.json()
+
+        //console.log(data.data.standings)
+
+        this.nome = data.data.name
+        this.times = data.data.standings
+
+      },
+      
+    },
+    created() {
+      this.getTimes()
+    },
+    components:{
+      Row
+    },
+  }).mount('#app')
+</script>
